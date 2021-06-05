@@ -1,0 +1,26 @@
+{
+  "name": "TableTopRPGHelper",
+  "version": "1.0.0",
+  "description": "A program to create and maintain table top role-playing game elements.",
+  "main": "index.js",
+  "scripts": {
+    "start": "set DEBUG=true & electron .",
+    "build:macos": "electron-builder --macos --dir",
+    "dist:macos": "electron-builder --macos",
+    "build:linux": "electron-builder --linux --dir",
+    "dist:linux": "electron-builder --linux",
+    "build:windows": "electron-builder --win --dir",
+    "dist:windows": "electron-builder --win"
+  },
+  "author": "Stephen Luttrell",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^12.0.7",
+    "electron-builder": "^22.10.5"
+  },
+  "dependencies": {
+    "adm-zip": "^0.5.5",
+    "electron-tabs": "^0.15.0",
+    "showdown": "^1.9.1"
+  }
+}

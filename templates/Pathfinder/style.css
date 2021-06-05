@@ -1,0 +1,69 @@
+		/* Set button styles to a flat look */
+			.edit_content button {
+				padding: 0;
+				border: none;
+				font: inherit;
+				color: inherit;
+				background-color: transparent;
+				cursor: pointer;
+			}
+
+			/* Rebuild the button/link styles from the ground up */
+			.edit-button {
+				/* inline-block keeps the height and width properties from block but allows elements to be displayed side-by-side with no line break as in inline */
+				display: inline-block;
+				text-align: center;
+				text-decoration: none;
+				/* padding for top and bottom is half the vertical size of the font (em) and left and right is the full width of the font */
+				padding: 0.5em 1em;
+				color: black;
+			}
+
+			/* Behavior when the button is clicked */
+			.edit-button:active {
+				transform: translateY(1px);
+				color: red;
+			}
+
+			/* Behavior when button is focused by the keyboard or similar device */
+			.edit-button:focus {
+				outline: none;
+				box-shadow: 0 0 0 3px rgba(225, 225, 225, 0.4);
+			}
+
+			/* Remove the focus style from non-keyboard interactions (nonstandard)*/
+			.js-focus-visible .edit-button:focus:not(.focus-visible) {
+				box-shadow: none;
+			}
+
+			.tab {
+				overflow: hidden;
+				border: 1px solid #ccc;
+				background-color: #f1f1f1;
+			}
+
+			.tab button {
+				background-color: inherit;
+				float: left;
+				border: none;
+				outline: none;
+				cursor: pointer;
+				padding: 14px 16px;
+				transition: 0.3;
+			}
+
+			.tab button:hover {
+				background-color: #ddd;
+			}
+
+			.tab button.active {
+				background-color: #ccc;
+			}
+
+			.tabcontent {
+				display: none;
+				padding: 6px 12px;
+				border: 1px solid #ccc;
+				border-top: none;
+			}
+

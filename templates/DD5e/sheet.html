@@ -1,0 +1,224 @@
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>D&D 5e Character Sheet</title>
+	</head>
+
+	<body>
+		<div id="who_am_i"></div>
+		<h1 id="section1">Basic Details</h1><br>
+		<p><button id="basic-name-arrow" name="basic" class="edit-button" type="button">↑</button>Name: <input id="basic-name-box" type="text" placeholder="character name" style="display: none;"><span id="basic-name-display" style="display: inline; text-transform: capitalize;"></span></p>
+		<p><button id="class_level-arrow" name="classLevel" class="edit-button" type="button">↑</button>Character Level: <span id="character-level-display"></span></p>
+		<span id="level_by_class"></span>
+		<p><button id="basic-race-arrow" name="basic" class="edit-button" type="button">↑</button>Race: <input id="basic-race-box" type="text" placeholder="character race" style="display: none;"><span id="basic-race-display" style="display: inline;"></span></p>
+		<p><button id="basic-background-arrow" name="basic" class="edit-button">↑</button>Background: <input id="basic-background-box" type="text" placeholder="character background" style="display: none;"><span id="basic-background-display" style="display: inline;"></span></p>
+		<p><button id="basic-age-arrow" name="basic" class="edit-button">↑</button>Age: <input id="basic-age-box" type="number" min="0" style="display: none;"><span id="basic-age-display" style="display: inline;"></span></p>
+		<p><button id="basic-build-arrow" name="basic" class="edit-button">↑</button>Build: <input id="basic-build-box" type="text" placeholder="height, weight, etc." style="display: none;"><span id="basic-build-display" style="display: inline;"></span></p>
+		<p><button id="basic-alignment-arrow" name="basic" class="edit-button">↑</button>Alignment: <input id="basic-alignment-box" type="text" placeholder="character alignment" style="display: none;"><span id="basic-alignment-display" style="display: inline;"></span></p>
+		<p><button id="basic-deity-arrow" name="basic" class="edit-button">↑</button>Deity: <input id="basic-deity-box" type="text" placeholder="who does this character worship?" style="display: none;"><span id="basic-deity-display" style="display: inline;"></span></p>
+		<p><button id="basic-languages-arrow" name="basic" class="edit-button">↑</button> Languages: <input id="basic-languages-box" type="text" placeholder="spoken and written languages" style="display: none;"><span id="basic-languages-display" style="display: inline;"></span></p>
+		<p><button id="basic-traits-arrow" name="basic" class="edit-button" type="button">↑</button>traits: <input id="basic-traits-box" type="text" placeholder="character trait" style="display: none;"></p>
+		<span id="basic-traits-display"></span>
+		<p><button id="basic-ideals-arrow" name="basic" class="edit-button">↑</button>Ideals: <input id="basic-ideals-box" type="text" placeholder="character ideals" style="display: none;"></p>
+		<span id="basic-ideals-display"></span>
+		<p><button id="basic-bonds-arrow" name="basic" class="edit-button">↑</button>Bonds: <input id="basic-bonds-box" type="text" placeholder="character bonds" style="display: none;"></p>
+		<span id="basic-bonds-display"></span>
+		<p><button id="basic-flaws-arrow" name="basic" class="edit-button">↑</button>Flaws: <input id="basic-flaws-box" type="text" placeholder="character flaws" style="display: none;"></p>
+		<span id="basic-flaws-display"></span>
+		<p><button id="basic-description-arrow" name="basic" class="edit-button">↑</button>Description:<br><textarea id="basic-description-box" rows="5" cols="60" spellcheck="true" placeholder="a brief description" style="display: none;"></textarea><span id="basic-description-display" style="display: inline;"></span></p><br>
+
+		<h2>Discreet Features</h2>
+		<p name="help" style="display: none;">Add discreet class features such as spell slots for spellcasters or rages for barbarians</p><br>
+		<p><select id="schema-box"></select></p>
+		<p><button id="schema-button" type="button" class="edit-button">activate</button> <button id="schema-reset" type="button" class="edit-button">reset</button></p>
+
+		<span id="schema-display"></span>
+
+		<form id="new_schema-form" style="display: none;">
+			<p><label for="new_schema-box">Name: </label><input id="new_schema-box" type="text" required></p>
+			<p><label for="new_schema-display_in_section-box">Where would you like this to be displayed? </label><select id="new_schema-display_in_section-box" defaultValue="0"><option value="combat">Combat section</option><option value="spells">Spells section</option></select></p>
+			<p><label for="new_schema-description-box">Brief Description: </label><input id="new_schema-description-box" type="text" required></p>
+			<fieldset id="new_schema-classes"><legend>To which class or classes does this belong:</legend></fieldset>
+			<fieldset>
+				<legend>Data per level</legend>
+				<p>The following text input boxes are for all 20 levels of progression. If there are multiple units (such as spell slots per spell level), separate each number with a comma. e.g. at 20th-level the bard gets 4, 3, 3, 3, 3, 2, 2, 1, 1 spells for each of 1st through 9th spell levels. A space between the numbers is not necessary and will be filtered out.<br>
+				<p>Please only use numbers (or commas) in these boxes, non-numeric characters might have undesired results.</p><br>
+				<p><label for="new_schema-0-box">1st-level: </label><input id="new_schema-0-box" type="text" required></p>
+				<p><label for="new_schema-1-box">2nd-level: </label><input id="new_schema-1-box" type="text" required></p>
+				<p><label for="new_schema-2-box">3rd-level: </label><input id="new_schema-2-box" type="text" required></p>
+				<p><label for="new_schema-3-box">4th-level: </label><input id="new_schema-3-box" type="text" required></p>
+				<p><label for="new_schema-4-box">5th-level: </label><input id="new_schema-4-box" type="text" required></p>
+				<p><label for="new_schema-5-box">6th-level: </label><input id="new_schema-5-box" type="text" required></p>
+				<p><label for="new_schema-6-box">7th-level: </label><input id="new_schema-6-box" type="text" required></p>
+				<p><label for="new_schema-7-box">8th-level: </label><input id="new_schema-7-box" type="text" required></p>
+				<p><label for="new_schema-8-box">9th-level: </label><input id="new_schema-8-box" type="text" required></p>
+				<p><label for="new_schema-9-box">10th-level: </label><input id="new_schema-9-box" type="text" required></p>
+				<p><label for="new_schema-10-box">11th-level: </label><input id="new_schema-10-box" type="text" required></p>
+				<p><label for="new_schema-11-box">12th-level: </label><input id="new_schema-11-box" type="text" required></p>
+				<p><label for="new_schema-12-box">13th-level: </label><input id="new_schema-12-box" type="text" required></p>
+				<p><label for="new_schema-13-box">14th-level: </label><input id="new_schema-13-box" type="text" required></p>
+				<p><label for="new_schema-14-box">15th-level: </label><input id="new_schema-14-box" type="text" required></p>
+				<p><label for="new_schema-15-box">16th-level: </label><input id="new_schema-15-box" type="text" required></p>
+				<p><label for="new_schema-16-box">17th-level: </label><input id="new_schema-16-box" type="text" required></p>
+				<p><label for="new_schema-17-box">18th-level: </label><input id="new_schema-17-box" type="text" required></p>
+				<p><label for="new_schema-18-box">19th-level: </label><input id="new_schema-18-box" type="text" required></p>
+				<p><label for="new_schema-19-box">20th-level: </label><input id="new_schema-19-box" type="text" required></p>
+			</fieldset><br>
+			<p><label for="new_schema-active-box">Do you wish to have this new character information available? </label><input id="new_schema-active-box" type="checkbox" checked></p><br>
+			<p><button id="new_schema-button" type="button" class="edit-button">done</button> <input id="schema-reset-button" type="reset" class="edit-button" onclick="update([ 'schema' ])"></p>
+		</form><br>
+
+		<h1 id="section2">Combat Stats</h1><br>
+		<span id="combat-schemas-display"></span>
+
+		<table id="ability_stats-table">
+			<caption>Ability Scores</caption>
+			<thead>
+				<tr><th><button id="ability_stats-arrow" class="edit-button">↑</button></th><th>Ability</th><th>Base</th><th>Modifier</th><th>Save</th><th>Adjustment</th></tr>
+			</thead>
+			<tbody>
+				<tr><td><input id="ability_stats-strength-save-box" type="checkbox" style="display: none;"><span id="ability_stats-strength-checkmark" style="display: none;">✓</span></td><td>Strength</td><td><input id="ability_stats-strength-box" type="number" value="0" min="1" style="display: none;"><span id="ability_stats-strength-display"></span></td><td id="ability_stats-strength-modifier-display"></td><td id="ability_stats-strength-save-display"></td><td><input id="ability_stats-adjust-strength-box" name="ability_stats-adjust" type="number"></td></tr>
+				<tr><td><input id="ability_stats-dexterity-save-box" type="checkbox" style="display: none;"><span id="ability_stats-dexterity-checkmark" style="display: none;">✓</span></td><td>Dexterity</td><td><input id="ability_stats-dexterity-box" type="number" value="0" min="1" style="display: none;"><span id="ability_stats-dexterity-display"></span></td><td id="ability_stats-dexterity-modifier-display"></td><td id="ability_stats-dexterity-save-display"></td><td><input id="ability_stats-adjust-dexterity-box" name="ability_stats-adjust" type="number"></td></tr>
+				<tr><td><input id="ability_stats-constitution-save-box" type="checkbox" style="display: none;"><span id="ability_stats-constitution-checkmark" style="display: none;">✓</span></td><td>Constitution</td><td><input id="ability_stats-constitution-box" type="number" value="0" min="1" style="display: none;"><span id="ability_stats-constitution-display"></span></td><td id="ability_stats-constitution-modifier-display"></td><td id="ability_stats-constitution-save-display"></td><td><input id="ability_stats-adjust-constitution-box" name="ability_stats-adjust" type="number"></td></tr>
+				<tr><td><input id="ability_stats-intelligence-save-box" type="checkbox" style="display: none;"><span id="ability_stats-intelligence-checkmark" style="display: none;">✓</span></td><td>Intelligence</td><td><input id="ability_stats-intelligence-box" type="number" value="0" min="1" style="display: none;"><span id="ability_stats-intelligence-display"></span></td><td id="ability_stats-intelligence-modifier-display"></td><td id="ability_stats-intelligence-save-display"></td><td><input id="ability_stats-adjust-intelligence-box" name="ability_stats-adjust" type="number"></td></tr>
+				<tr><td><input id="ability_stats-wisdom-save-box" type="checkbox" style="display: none;"><span id="ability_stats-wisdom-checkmark" style="display: none;">✓</span></td><td>Wisdom</td><td><input id="ability_stats-wisdom-box" type="number" value="0" min="1" style="display: none;"><span id="ability_stats-wisdom-display"></span></td><td id="ability_stats-wisdom-modifier-display"></td><td id="ability_stats-wisdom-save-display"></td><td><input id="ability_stats-adjust-wisdom-box" name="ability_stats-adjust" type="number"></td></tr>
+				<tr><td><input id="ability_stats-charisma-save-box" type="checkbox" style="display: none;"><span id="ability_stats-charisma-checkmark" style="display: none;">✓</span></td><td>Charisma</td><td><input id="ability_stats-charisma-box" type="number" value="0" min="1" style="display: none;"><span id="ability_stats-charisma-display"></span></td><td id="ability_stats-charisma-modifier-display"></td><td id="ability_stats-charisma-save-display"></td><td><input id="ability_stats-adjust-charisma-box" name="ability_stats-adjust" type="number"></td></tr>
+			</tbody>
+		</table><br>
+
+			<h2>Vitals</h2><br>
+		<ul>
+			<li>Initiative: <span id="combat_stats-initiative-display"></span></li>
+			<li><button id="combat_stats-hit_points-arrow" name="combat_stats" class="edit-button">↑</button> Hit Points: <input id="combat_stats-hit_points-box" type="number" style="display: none;"><span id="combat_stats-hit_points-display"></span> Adjustment: <input id="combat_stats-hit_points-adjust" name="combat_stats-adjust" type="number"> Current: <span id="combat_stats-hit_points-current"></span> <button id="combat_stats-hit_points-notes-arrow" name="combat_stats-notes" class="edit-button">→</button><input id="combat_stats-hit_points-notes-box" type="text" style="display: none;"> <span id="combat_stats-hit_points-notes-display"></span></li>
+			<li><button id="combat_stats-hit_dice-arrow" name="combat_stats" class="edit-button">↑</button>Hit Dice: <input id="combat_stats-hit_dice-adjust" name="combat_stats-adjust" type="number"> <select id="combat_stats-hit_dice-box" defaultValue="0" style="display: none;"><option value="d4">d4</option><option value="d6">d6</option><option value="d8">d8</option><option value="d10">d10</option><option value="d12">d12</option></select><span id="combat_stats-hit_dice-display"></span></li>
+			<li>Armor Class: <span id="combat_stats-armor_class-display"></span> Adjust: <input id="combat_stats-armor-adjust" name="combat_stats-adjust" type="number"> <button id="combat_stats-armor-notes-arrow" name="combat_stats-notes" class="edit-button">→</button><input id="combat_stats-armor-notes-box" type="text" style="display: none;"> <span id="combat_stats-armor-notes-display"></span></li>
+			<li><button id="combat_stats-speed-arrow" name="combat_stats" class="edit-button">↑</button> Speed: <input id="combat_stats-speed-box" type="number" style="display: none;"><span id="combat_stats-speed-display"></span> Adjust: <input id="combat_stats-speed-adjust" name="combat_stats-adjust" type="number"> Current: <span id="combat_stats-speed-current"></span> <button id="combat_stats-speed-notes-arrow" name="combat_stats-notes" class="edit-button">→</button><input id="combat_stats-speed-notes-box" type="text" style="display: none;"> <span id="combat_stats-speed-notes-display"></span></li>
+			<li>Passive Perception: <span id="combat_stats-passive_perception-display"></span></li>
+		</ul><br>
+
+		<h2>Weapons</h2><br>
+		<span id="weapons-table"></span><br>
+
+		<h1 id="section3">Features</h1><br>
+		<span id="features-display"></span>
+
+		<h2>Add or edit a feature</h2><br>
+		<form id="features-form">
+			<p><label for="features-name-box">Name: </label><input id="features-name-box" type="text" placeholder="What is the name of the feature?" required></p>
+			<p><label for="features-description-box">Description: </label><textarea id="features-description-box" placeholder="What does this feature do?" rows="5" cols="60" spellcheck="true" required></textarea></p>
+			<p><label for="features-quantity-box">How many do you get per rest period? </label><input id="features-quantity-box" type="number" min="0" value="0"></p>
+			<p><label for="features-replenish-box">Do they replenish after a short or long rest? </label><select id="features-replenish-box" defaultValue="0"><option value="">Select</option><option value="short">Short rest</option><option value="long">Long rest</option></select></p><br>
+			<p><button id="features-button" type="button" class="edit-button" value="">done</button> <input id="features-reset-button" type="reset" class="edit-button"></p>
+		</form><br>
+
+		<h1 id="section4">Proficiencies</h1><br>
+			<table id="proficiencies-table">
+				<thead>
+					<tr><th><button id="proficiencies-arrow" type="button" class="edit-button">↑</button></th><th>Name</th><th>Governing Stat</th><th>Check</th></tr>
+				</thead>
+				<tbody>
+					<tr><td>x</td><td>Dummy</td><td>Ability</td><td>nn</td></tr>
+				</tbody>
+			</table><br>
+		<p><button id="other-proficiencies-arrow" type="button">↑</button>Other: <span id="other-proficiencies-display"></span><input id="other-proficiencies-box" type="text" style="display: none;"></p>
+		<p name="help" style="display: none;">proficiencies such as armor, weapons, and tools</p><br>
+
+		<h1 id="section5">Spells</h1><br>
+		<span id="spell-schemas-display"></span>
+
+		<span id="spells-ability">
+			<h2>Spellcasting Ability (<button id="spells-ability-modifier-arrow" type="button">↑</button>&nbsp;<select id="spells-ability-modifier-box" style="display: none;"><option value="intelligence">Intelligence</option><option value="wisdom">Wisdom</option><option value="charisma">Charisma</option></select> <span id="spells-ability-modifier-display" style="text-transform: capitalize;"></span>)</h2><br>
+
+			<ul>
+				<li>Spell save DC: <span id="spells-save-dc-display"></span></li>
+				<li>Spell attack modifier: <span id="spells-attack-modifier-display"></span></li>
+			</ul><br>
+				<p><button id="spells-components-arrow" type="button">↑</button> Spell Components: <input id="spells-components-box" type="text" style="display: none;"><span id="spells-components-display"></span></p>
+		</span><br>
+
+		<span id="invocations" style="display: none;">
+			<h2>Known Invocations</h2><br>
+			<span id="invocations-display"></span>
+		</span>
+
+		<span id="spells-active" style="display: none;">
+			<h2>Active Spells</h2><br>
+			<span id="spells-active-display"></span>
+		</span>
+
+		<span id="spells-known" style="display: none;">
+			<h2>Known Spells</h2><br>
+			<span id="spells-known-display"></span>
+		</span>
+
+		<h2>Add or edit a spell or invocation</h2><br>
+		<form id="spells-form">
+			<p><label for="spells-name-box">Name: </label><input id="spells-name-box" type="text" required></p>
+			<p><label for="spells-type-box">Is this a spell or invocation? </label><select id="spells-type-box" defaultValue="0"><option value="spell">Spell</option><option value="invocation">Invocation</option></select></p>
+			<p><label for="spells-level-box">Level: </label><select id="spells-level-box" defaultValue="0"><option value="">Select</option><option value="cantrip">Cantrip</option><option value="1st">1st</option><option value="2nd">2nd</option><option value="3rd">3rd</option><option value="4th">4th</option><option value="5th">5th</option><option value="6th">6th</option><option value="7th">7th</option><option value="8th">8th</option><option value="9th">9th</option></select></p>
+			<p><label for="spells-school-box">school: </label><select id="spells-school-box" defaultValue="0"><option value="">Select</option><option value="abjuration">Abjuration</option><option value="conjuration">Conjuration</option><option value="divination">Divination</option><option value="enchantment">Enchantment</option><option value="evocation">Evocation</option><option value="illusion">Illusion</option><option value="necromancy">Necromancy</option><option value="transmutation">Transmutation</option></select></p>
+			<p><label for="spells-ritual_tag-box">Can this spell be cast using a ritual? </label><input id="spells-ritual_tag-box" type="checkbox"></p>
+			<p><label for="spells-casting_time-box">Casting Time: </label><input id="spells-casting_time-box" type="text"></p>
+			<p><label for="spells-range-box">Range: </label><input id="spells-range-box" type="text"></p>
+			<p>Components: <label for="spells-verbal-box">Verbal </label><input id="spells-verbal-box" type="checkbox"> <label for="spells-somatic-box">Somatic </label><input id="spells-somatic-box" type="checkbox"> <label for="spells-materials-box">Materials </label><input id="spells-materials-box" type="text"></p>
+			<p><label for="spells-duration-box">Duration: </label><input id="spells-duration-box" type="text"></p>
+			<p><label for="spells-description-box">Description:<br></label><textarea id="spells-description-box" rows="5" cols="60"></textarea></p><br>
+			<p><button id="spells-button" type="button" class="edit-button" value="">done</button> <input id="spells-reset-button" type="reset" class="edit-button"></p>
+		</form><br>
+
+		<h1 id="section6">Inventory</h1><br>
+		<table id="inventory-table">
+			<thead>
+				<tr><th>Item Type</th><th>Contents</th></tr>
+			</thead>
+			<tbody></tbody>
+		</table><br>
+		<p><button id="gold-arrow" type="button" class="edit-button">↑</button>Gold: <input id="gold-box" type="text" style="display: none;"><span id="gold-display"></span> Carrying weight: <span id="inventory-weight-display"></span> lbs.</p><br>
+
+		<h2>Add or edit an item in your inventory</h2><br>
+		<form id="inventory-form">
+			<fieldset>
+				<legend>Select the type of item</legend>
+				<p><label for="inventory-type-box">Select the item type (armor, weapon, or other): </label><select id="inventory-type-box" defaultValue="0"><option value="armor">Armor</option><option value="weapon">Weapon</option><option value="other">Other</option></select></p>
+			</fieldset><br>
+
+			<fieldset>
+				<legend>These are traits all items share.</legend>
+				<p><label for="inventory-name-box">Item name:</label><input id="inventory-name-box" type="text" required></p>
+				<p><label for="inventory-description-box">Description (optional):<br></label><textarea id="inventory-description-box" rows="5" cols="60"></textarea></p>
+				<p><label for="inventory-weight-box">Weight (optional): </label><input id="inventory-weight-box" type="number" min="0" value="0"> lbs <label for="inventory-cost-box">Cost (optional): </label><input id="inventory-cost-box" type="text" size="6"> <label for="inventory-quantity-box">Quantity (optional): </label><input id="inventory-quantity-box" type="number" min="1" value="1"></p>
+			</fieldset><br>
+
+			<fieldset>
+				<legend>Set these to keep track of armor attributes.</legend>
+				<p><label for="inventory-style_armor-box">Select armor type: </label><select id="inventory-style_armor-box" defaultValue="0"><option value="light">Light</option><option value="medium">Medium</option><option value="heavy">Heavy</option><option value="shield">Shield</option></select></p>
+				<p><label for="inventory-armor_class-box">Base armor class: </label><input id="inventory-armor_class-box" type="number" value="0"></p>
+				<p><label for="inventory-add_dex_mod-box">Add your dex modifier? </label><input id="inventory-add_dex_mod-box" type="checkbox"> <label for="inventory-max_dex_bonus-box">Maximum dexterity bonus: </label><input id="inventory-max_dex_bonus-box" type="number" min="0" value="0" disabled></p>
+				<p><label for="inventory-stealth_disadv-box">Does this armor impose disadvantage on stealth? </label><input id="inventory-stealth_disadv-box" type="checkbox"></p>
+				<p><label for="inventory-active-box">Would you like to equip this armor? </label><input id="inventory-active-box" type ="checkbox"></p>
+			</fieldset><br>
+
+			<fieldset>
+				<legend>Set these to keep track of weapon attributes.</legend>
+				<p><label for="inventory-style_weapon-box">Select weapon type: </label><select id="inventory-style_weapon-box" defaultValue="0"><option value="simple">Simple</option><option value="martial">Martial</option></select></p>
+				<p><label for="inventory-sub_type-weapon-box">Is this a melee or ranged weapon? </label><select id="inventory-sub_type-box" defaultValue="0"><option value="melee">Melee</option><option value="ranged">Ranged</option></select></p>
+				<p><label for="inventory-proficient-box">Are you proficient with this weapon? </label><input id="inventory-proficient-box" type="checkbox" checked></p>
+				<p><label for="inventory-damage-box">The damage roll and type (e.g. 1d8 piercing): </label><input id="inventory-damage-box" type="text"></p>
+				<p>If this is a ranged weapon or one with the thrown property, what is its range? <label for="inventory-min-box">min: </label><input id="inventory-min-box" type="number" min="0" value="0"> / <label for="inventory-max-box">max: </label><input id="inventory-max-box" type="number" min="0" value="0"></p>
+				<p><label for="inventory-properties-box">If this weapon has any other properties (e.g. light, finesse, or versatile): </label><input id="inventory-properties-box" type="text"></p>
+			</fieldset><br>
+
+			<p><button id="inventory-button" type="button" class="edit-button" value="">done</button> <input id="inventory-reset-button" type="reset" class="edit-button"></p>
+		</form><br>
+
+		<h1 id="section7">Log</h1><br>
+		<span id="log-display" style="display: block"></span>
+		<span id="#log-nav"></span>
+		<p><input id="log-box" type="text" placeholder="Create log entry"></p>
+		<p><button id="log-button" type="button" class="edit-button">submit</button><button id="log-export" type="button" class="edit-button">export log</button><button id="log-clear" type="button" class="edit-button">clear log</button></p>
+
+		<div id="test"></div>
+		<script src='scripts.js'></script>
+	</body>
+</html>

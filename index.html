@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!--		<meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" /> -->
+
+		<title>
+			Table Top Role-Playing Game Helper
+		</title>
+		<link rel="stylesheet" href="node_modules/electron-tabs/electron-tabs.css">
+
+		<style>
+			body {
+				margin: 0;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="etabs-tabgroup">
+			<div class="etabs-tabs"></div>
+			<div class="etabs-buttons"></div>
+		</div>
+		<div class="etabs-views"></div>
+
+		<script>
+			const tabGroup = require('./renderer');
+			const { ipcRenderer, webFrame, BrowserWindow } = require('electron');
+			const AdmZip = require('adm-zip');
+
+			function createTab(title, url) {
+				let newTab = tabGroup.addTab({
+					title: title,
+					src: url,
+					visible: true,
+					active: true
+				});
+			}
+
+			ipcRenderer.on('who_am_i', () => {
+				const tab = tabGroup.getActiveTab().id; // Get the id of the active tab
+				const frame = webFrame.firstChild.routingId; // Get the routing id of the first child (the iFrame)
+				// Add them together to get the frame id for the actual file path and data to send to the main process
+				ipcRenderer.send('save_request', tab+frame);
+			});
+
+			ipcRenderer.on('load_character', (event, arg) => {
+				if (typeof arg === 'object') { // This is a new character. Create new tab with empty sheet.
+					const title = arg.file.replace(/\\/g, '/').split('/').pop().split('.')[0]; // Remove the path and extension for the tab title
+					const url = `./Templates/${arg.ruleset}/sheet.html?filename=${arg.file}`; // Construct the url passing the file name to the sheet
+					createTab(title, url); // Load the tab
+				} else { // This is an existing character. Load as normal.
+					const zip = new AdmZip(arg); // Open the archive
+					const title = arg.replace(/\\/g, '/').split('/').pop().split('.')[0]; // Remove the path and extension for the tab title
+					const data = zip.readAsText(`${title}.dat`); // Get the data from the dat file
+					const info = JSON.parse(data); // Character info
+					const url = `./Templates/${info.game_info.ruleset}/sheet.html?filename=${arg}`; // Construct the url passing the file name to the sheet
+					createTab(title, url); // Load the tab
+				}
+			});
+		</script>
+	</body>
+</html>
