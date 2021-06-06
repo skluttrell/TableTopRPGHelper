@@ -36,7 +36,7 @@ function saveFile(startDir='') {
 	const filename = dialog.showSaveDialogSync(window, options);
 
 	if (filename) {
-		characterFile = filename.replace(/\\/g, '/').split('/').pop().split('.')[0] + '.dat';
+		characterFile = filename.split('\\').pop().split('.')[0] + '.dat';
 		zip.addFile(characterFile, Buffer.alloc(0, '')); // Create an empty character file in the archive
 		zip.addFile('log.txt', Buffer.alloc(0, '')); // Create the log file in the character archive
 		zip.writeZip(filename); // Store the archive on disc
@@ -73,7 +73,7 @@ ipcMain.on('save_character', (event, arg) => {
 	if (typeof arg === 'object') { // Just save the information
 		const zip = new AdmZip(arg.file);
 		const tmp = new AdmZip();
-		characterFile = arg.file.replace(/\\/g, '/').split('/').pop().split('.')[0] + '.dat';
+		characterFile = arg.file.split('\\').pop().split('.')[0] + '.dat';
 		// Known issue where updateFile can currupt the file in the archive
 		// Adding content to Existing Archive corrupts data#378 opened on May 3 by tylertownsend
 		//zip.updateFile(characterFile, Buffer.alloc(lengthUtf8(arg.info), arg.info));
@@ -86,7 +86,7 @@ ipcMain.on('save_character', (event, arg) => {
 	} else { // This is a new character request
 		const pattern = String(/^\*\[.+\]\*$/.exec(arg));
 		if (pattern) {
-			const filename = saveFile(`./Templates/${pattern.substring(2, pattern.length - 2)}/Characters`); // Request a save location
+			const filename = saveFile(`${__dir}\Templates\${pattern.substring(2, pattern.length - 2)}\Characters`); // Request a save location
 			if (filename) { // Load the new character sheet
 				window.send('load_character', { file: filename, ruleset: pattern.substring(2, pattern.length - 2) });
 			}

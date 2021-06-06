@@ -22,5 +22,16 @@
     "adm-zip": "^0.5.5",
     "electron-tabs": "^0.15.0",
     "showdown": "^1.9.1"
+  },
+  "build": {
+    "extraResources": [
+	{
+        "from": "./Templates/",
+        "to": "../Templates",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ]
   }
 }

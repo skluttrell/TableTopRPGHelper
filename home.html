@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!--		<meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" /> -->
+		<meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
 
 		<title>
 			Home Tab
@@ -16,26 +16,23 @@
 	</head>
 
 	<body>
-		<p>I have absolutely no idea how this looks visually. I will need someone with sight to make it pretty for visual users. So I hope it at least displays. All I know is I can use the screen reader with it.</p>
-		<p>The character presented under recent characters is just a test case so I can make sure everything works. The final program will pole the 5 most recently opened sheets.</p>
 		<h1>Recent Characters</h1>
 		<ul id="recent-characters"></ul><br>
-
-		<p>This will not be a D&D specific app. Rather I am leaving it open to any character sheet type that has been developed. So, under New character, there will be a number of options: not just D&D as it is now.</p>
 		<h1>Create New Characters</h1>
 		<ul id="new_characters"></ul>
 		<span id="test"></span>
-
-		<p>After that, I want to have some Game Master Tools and a dice roller. Like maybe an initiative counter, maybe give the Game Master access to character sheets, some sort of battle map that's accessible. I dunno what all will be under Game Master Tools yet.</p>
-		<p>Finally, I want to be able to connect over a network so everyone can see the dice rolled, maybe have a way to send private messages for some RP. Stuff like that.</p>
+			<a onclick="ipcRenderer.send('test');">show tab index to frame id</a>
+			<a onclick="ipcRenderer.send('who_am_i');">show frame id</a>
 
 		<script>
+			const path = require('path');
 			const { ipcRenderer } = require('electron');
 
-			let filename = './Templates/DD5e/Characters/viljim.cha';
+			const filename = `${__dirname}\\Templates\\DD5e\\Characters\\viljim.cha`;
 			let link;
 			let uList = document.getElementById("recent-characters");
-			link = `<a onclick="ipcRenderer.send('load_character', '${filename}');">${filename}</a>`;
+			link = `<a onclick="ipcRenderer.send('load_character', '${filename.replace(/\\/g, '\\\\')}');">Viljim</a>`;
+console.log(link);
 			uList.innerHTML += `<li>${link}</li>`;
 
 			uList = document.getElementById('new_characters');
