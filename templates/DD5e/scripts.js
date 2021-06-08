@@ -160,9 +160,8 @@ filename = search.get('filename');
 
 if (filename) {
 	const zip = new AdmZip(filename);
-	const fs = require('fs');
-	filename = filename.replace(/\\/g, '/');
-	let data = zip.readAsText(filename.split('/').pop().split('.')[0] + '.dat');
+	const path = require('path');
+	let data = zip.readAsText(`${path.parse(filename).name}.dat`);
 	if (data) {
 		checkVersion(info, JSON.parse(data));
 	}
