@@ -1,5 +1,6 @@
 const { app, Menu, BrowserWindow, globalShortcut, dialog, ipcMain } = require('electron');
 const AdmZip = require('adm-zip');
+const Paths = require('path');
 
 function loadFile(filename=null) {
 			const window = BrowserWindow.getFocusedWindow();
@@ -86,7 +87,7 @@ ipcMain.on('save_character', (event, arg) => {
 	} else { // This is a new character request
 		const pattern = String(/^\*\[.+\]\*$/.exec(arg));
 		if (pattern) {
-			const filename = saveFile(`${__dir}\Templates\${pattern.substring(2, pattern.length - 2)}\Characters`); // Request a save location
+			const filename = saveFile(Paths.join(__dirname, "Templates", pattern.substring(2, pattern.length - 2), "Characters")); // Request a save location
 			if (filename) { // Load the new character sheet
 				window.send('load_character', { file: filename, ruleset: pattern.substring(2, pattern.length - 2) });
 			}
