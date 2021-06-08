@@ -1,5 +1,6 @@
 const { app, Menu, BrowserWindow, globalShortcut, dialog, ipcMain } = require('electron');
 const AdmZip = require('adm-zip');
+const path = require('path');
 
 function loadFile(filename=null) {
 			const window = BrowserWindow.getFocusedWindow();
@@ -36,8 +37,7 @@ function saveFile(startDir='') {
 	const filename = dialog.showSaveDialogSync(window, options);
 
 	if (filename) {
-		characterFile = filename.split('\\').pop().split('.')[0] + '.dat';
-		zip.addFile(characterFile, Buffer.alloc(0, '')); // Create an empty character file in the archive
+		zip.addFile(`${path.parse(filename).name}.dat`, Buffer.alloc(0, '')); // Create an empty character file in the archive
 		zip.addFile('log.txt', Buffer.alloc(0, '')); // Create the log file in the character archive
 		zip.writeZip(filename); // Store the archive on disc
 		return filename; // Send the new file name back to the save request
@@ -72,21 +72,22 @@ ipcMain.on('save_character', (event, arg) => {
 
 	if (typeof arg === 'object') { // Just save the information
 		const zip = new AdmZip(arg.file);
-		const tmp = new AdmZip();
 		characterFile = arg.file.split('\\').pop().split('.')[0] + '.dat';
 		// Known issue where updateFile can currupt the file in the archive
 		// Adding content to Existing Archive corrupts data#378 opened on May 3 by tylertownsend
 		//zip.updateFile(characterFile, Buffer.alloc(lengthUtf8(arg.info), arg.info));
 		//zip.updateFile('log.txt', Buffer.alloc(lengthUtf8(arg.log), arg.log));
-		zip.deleteFile(characterFile)
-		zip.addFile(characterFile, Buffer.alloc(lengthUtf8(arg.info), arg.info));
+		zip.deleteFile(`${path.parse(arg.file).name}.dat`)
+		zip.addFile(`${path.parse(arg.file).name}.dat`, Buffer.alloc(lengthUtf8(arg.info), arg.info));
 		zip.deleteFile('log.txt');
 		zip.addFile('log.txt', Buffer.alloc(lengthUtf8(arg.log), arg.log));
 		zip.writeZip();
 	} else { // This is a new character request
 		const pattern = String(/^\*\[.+\]\*$/.exec(arg));
 		if (pattern) {
-			const filename = saveFile(`${__dir}\Templates\${pattern.substring(2, pattern.length - 2)}\Characters`); // Request a save location
+			let startDir = (process.platform === 'windows') ? path.join(__dirname, 'Templates', pattern.substring(2, pattern.length - 2), 'Characters') : '~/documents';
+				const filename = saveFile(startDir); // Request a save location
+
 			if (filename) { // Load the new character sheet
 				window.send('load_character', { file: filename, ruleset: pattern.substring(2, pattern.length - 2) });
 			}

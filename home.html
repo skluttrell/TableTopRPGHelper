@@ -28,7 +28,7 @@
 			const path = require('path');
 			const { ipcRenderer } = require('electron');
 
-			const filename = `${__dirname}\\Templates\\DD5e\\Characters\\viljim.cha`;
+			const filename = path.join(__dirname, 'Templates', 'DD5e', 'Characters', 'viljim.cha');
 			let link;
 			let uList = document.getElementById("recent-characters");
 			link = `<a onclick="ipcRenderer.send('load_character', '${filename.replace(/\\/g, '\\\\')}');">Viljim</a>`;

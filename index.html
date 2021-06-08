@@ -29,6 +29,7 @@
 			const tabGroup = require('./renderer');
 			const { ipcRenderer, webFrame, BrowserWindow } = require('electron');
 			const AdmZip = require('adm-zip');
+			const path = require('path');
 
 			function createTab(title, url) {
 				let newTab = tabGroup.addTab({
@@ -48,13 +49,12 @@
 
 			ipcRenderer.on('load_character', (event, arg) => {
 				if (typeof arg === 'object') { // This is a new character. Create new tab with empty sheet.
-					const title = arg.file.split('\\').pop().split('.')[0]; // Remove the path and extension for the tab title
+					const title = path.parse(arg.file).name; // Remove the path and extension for the tab title
 					const url = `./Templates/${arg.ruleset}/sheet.html?filename=${arg.file}`; // Construct the url passing the file name to the sheet
 					createTab(title, url); // Load the tab
 				} else { // This is an existing character. Load as normal.
-console.log(arg);
 					const zip = new AdmZip(arg); // Open the archive
-					const title = arg.split('\\').pop().split('.')[0]; // Remove the path and extension for the tab title
+					const title = path.parse(arg).name; // Remove the path and extension for the tab title
 					const data = zip.readAsText(`${title}.dat`); // Get the data from the dat file
 					const info = JSON.parse(data); // Character info
 					const url = `./Templates/${info.game_info.ruleset}/sheet.html?filename=${arg}`; // Construct the url passing the file name to the sheet
