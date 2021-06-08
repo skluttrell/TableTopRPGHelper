@@ -85,8 +85,7 @@ ipcMain.on('save_character', (event, arg) => {
 	} else { // This is a new character request
 		const pattern = String(/^\*\[.+\]\*$/.exec(arg));
 		if (pattern) {
-			let startDir = (process.platform === 'windows') ? path.join(__dirname, 'Templates', pattern.substring(2, pattern.length - 2), 'Characters') : '~/documents';
-				const filename = saveFile(startDir); // Request a save location
+				const filename = saveFile(app.getPath('documents')); // Request a save location
 
 			if (filename) { // Load the new character sheet
 				window.send('load_character', { file: filename, ruleset: pattern.substring(2, pattern.length - 2) });

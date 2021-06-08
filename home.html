@@ -20,9 +20,6 @@
 		<ul id="recent-characters"></ul><br>
 		<h1>Create New Characters</h1>
 		<ul id="new_characters"></ul>
-		<span id="test"></span>
-			<a onclick="ipcRenderer.send('test');">show tab index to frame id</a>
-			<a onclick="ipcRenderer.send('who_am_i');">show frame id</a>
 
 		<script>
 			const path = require('path');
@@ -32,7 +29,6 @@
 			let link;
 			let uList = document.getElementById("recent-characters");
 			link = `<a onclick="ipcRenderer.send('load_character', '${filename.replace(/\\/g, '\\\\')}');">Viljim</a>`;
-console.log(link);
 			uList.innerHTML += `<li>${link}</li>`;
 
 			uList = document.getElementById('new_characters');
