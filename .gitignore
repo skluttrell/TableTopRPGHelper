@@ -1,2 +1,5 @@
 dist
 *.cha
+.vscode
+node_modules
+.DS_Store
