@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, Menu, ipcMain } = require('electron');
 const menu = require('./menu');
 let window;
 
@@ -8,19 +8,27 @@ app.on('ready', () => {
 			nodeIntegration: true,
 			contextIsolation: false,
 			nodeIntegrationInSubFrames: true,
-			webviewTag: true,
+//			webviewTag: true,
 		}
 	});
 	window.maximize();
 	window.loadURL(`file://${__dirname}/index.html`);
-  window.on('ready-to-show', function () {
-    window.show();
-    window.focus();
-  });
+	window.on('ready-to-show', function () {
+		window.show();
+		window.focus();
+	});
+	window.on('close', (event) => {
+		if (window) {
+			event.preventDefault();
+			window.webContents.send('close-app');
+		}
+	});
+	ipcMain.on('close-app', _ => {
+		window = null;
+		if (process.platform !== 'darwin') {
+			app.quit();
+		}
+	});
 });
 
-app.on('window-all-closed', () => {
-	if (process.platform !== 'darwin') {
-		app.quit();
-	}
-});
+Menu.setApplicationMenu(menu);

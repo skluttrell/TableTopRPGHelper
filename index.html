@@ -30,6 +30,8 @@
 			const { ipcRenderer, webFrame, BrowserWindow } = require('electron');
 			const AdmZip = require('adm-zip');
 			const path = require('path');
+			const recentFiles = require('./recentFiles');
+			recentFiles.loadRecentFiles('./config.json');
 
 			function createTab(title, url) {
 				let newTab = tabGroup.addTab({
@@ -40,6 +42,11 @@
 				});
 			}
 
+			ipcRenderer.on('close-app', _ => {
+				recentFiles.saveRecentFiles('./config.json');
+				ipcRenderer.send('close-app');
+			});
+
 			ipcRenderer.on('who_am_i', () => {
 				const tab = tabGroup.getActiveTab().id; // Get the id of the active tab
 				const frame = webFrame.firstChild.routingId; // Get the routing id of the first child (the iFrame)
@@ -47,18 +54,43 @@
 				ipcRenderer.send('save_request', tab+frame);
 			});
 
+			ipcRenderer.on('request_recent_files_list', (event, arg) => {
+				ipcRenderer.send('here_is_the_recent_files_list', { id: arg, list: recentFiles.getList() });
+			});
+
 			ipcRenderer.on('load_character', (event, arg) => {
 				if (typeof arg === 'object') { // This is a new character. Create new tab with empty sheet.
 					const title = path.parse(arg.file).name; // Remove the path and extension for the tab title
 					const url = `./Templates/${arg.ruleset}/sheet.html?filename=${arg.file}`; // Construct the url passing the file name to the sheet
 					createTab(title, url); // Load the tab
+					recentFiles.addFile(arg.file, ruleset=arg.ruleset)
 				} else { // This is an existing character. Load as normal.
 					const zip = new AdmZip(arg); // Open the archive
 					const title = path.parse(arg).name; // Remove the path and extension for the tab title
 					const data = zip.readAsText(`${title}.dat`); // Get the data from the dat file
 					const info = JSON.parse(data); // Character info
 					const url = `./Templates/${info.game_info.ruleset}/sheet.html?filename=${arg}`; // Construct the url passing the file name to the sheet
-					createTab(title, url); // Load the tab
+
+					// Check to see if the file is already open
+					let isOpen = false;
+					for (let v of tabGroup.getTabs()) {
+						if (title === v.getTitle()) {
+							v.activate();
+							isOpen = true;
+							break;
+						}
+					}
+
+					if (!isOpen) {
+						createTab(title, url); // Load the tab
+					}
+
+					if (recentFiles.isInList(arg) !== null) {
+						recentFiles.updateFile(file=arg, name=info.basic.name, ruleset=info.game_info.ruleset, closed=false);
+						recentFiles.moveToTop(arg);
+					} else {
+						recentFiles.addFile(arg, info.basic.name, info.game_info.ruleset);
+					}
 				}
 			});
 		</script>

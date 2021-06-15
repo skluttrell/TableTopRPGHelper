@@ -24,16 +24,27 @@
 		<script>
 			const path = require('path');
 			const { ipcRenderer } = require('electron');
+			const fs = require('fs');
+			let link, uList;
 
-			const filename = path.join(__dirname, 'Templates', 'DD5e', 'Characters', 'viljim.cha');
-			let link;
-			let uList = document.getElementById("recent-characters");
-			link = `<a onclick="ipcRenderer.send('load_character', '${filename.replace(/\\/g, '\\\\')}');">Viljim</a>`;
-			uList.innerHTML += `<li>${link}</li>`;
+			ipcRenderer.send('request_recent_files_list');
+			ipcRenderer.on('here_is_the_recent_files_list', (event, arg) => {
+				uList = document.getElementById("recent-characters");
+				if (arg.length) {
+					for (let v of arg) {
+					link = `<a onclick="ipcRenderer.send('load_character', '${v.file.replace(/\\/g, '\\\\')}');">${v.file}, Character: ${v.name}</a>`;
+						uList.innerHTML += `<li>${link}</li>`;
+					}
+				} else {
+					uList.innerHTML += '<li>There are no recent files.</li>';
+				}
+			});
 
 			uList = document.getElementById('new_characters');
-			link = `<a onclick="ipcRenderer.send('save_character', '*[DD5e]*');">D&amp;D 5e</a>`;
-			uList.innerHTML += `<li>${link}</li>`;
+			for (let v of ipcRenderer.sendSync('request_sheet_list')) {
+				link = `<a onclick="ipcRenderer.send('save_character', '${v.type}');">${v.name}</a>`;
+				uList.innerHTML += `<li>${link}</li>`;
+			}
 		</script>
 	</body>
 </html>
